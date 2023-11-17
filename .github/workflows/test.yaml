@@ -14,4 +14,4 @@ jobs:
     - name: Check
       run: |
         echo "Changed files: ${{ steps.changed-files.outputs.changed_files }}"
-        echo "::set-output name=changed_files::${{ steps.changed-files.outputs.changed_files }}"
+        echo "changed_files=${{ steps.changed-files.outputs.changed_files }}" >> $GITHUB_OUTPUT
