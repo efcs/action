@@ -9,7 +9,8 @@ jobs:
         fetch-depth: 2
     - uses: efcs/action@match-path
       with:
-        paths: '**/*'
+        paths: |
+          .github/
     - name: Check
       run: |
         echo "Changed files: ${{ steps.changed-files.outputs.changed_files }}"
