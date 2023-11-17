@@ -3,13 +3,16 @@ description: 'Match strings against paths in diff for origin/main and current SH
 
 inputs:
   paths:
-    description: 'Paths to match (glob syntax)'
+    description: 'directories to match. Does not support globbing or regular expressions'
     required: true
 
 outputs:
   changed:
     description: 'True if any diff path matches the inputs'
     value: ${{ steps.changed-files.outputs.changed_files }}
+  has-changes:
+    description: 'True if any diff path matches the inputs'
+    value: ${{ steps.changed-files.outputs.changed_files != '' }}
 
 runs:
   using: "composite"
@@ -19,9 +22,9 @@ runs:
     id: changed-files
     run: |
         if ${{ github.event_name == 'pull_request' }}; then
-            echo "changed_files=$(git diff --name-only -r HEAD^1 HEAD | xargs)" >> $GITHUB_OUTPUT
+            echo "changed_files=$(git diff --name-only -r HEAD^1 HEAD -- ${{ inputs.paths }} | xargs)" >> $GITHUB_OUTPUT
         else
-            echo "changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} | xargs)" >> $GITHUB_OUTPUT
+            echo "changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} -- ${{ inputs.paths }} | xargs)" >> $GITHUB_OUTPUT
         fi
   - name: List changed files
     shell: bash
