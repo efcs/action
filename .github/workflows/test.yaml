@@ -5,6 +5,8 @@ jobs:
     runs-on: [ efcs-runners ]
     steps:
     - uses: actions/checkout@v2
+      with:
+        - fetch-depth: 2
     - uses: efcs/action@match-path
       with:
         paths: '**/*'
