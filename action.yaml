@@ -5,6 +5,7 @@ inputs:
   paths:
     description: 'directories to match. Does not support globbing or regular expressions'
     required: true
+    default:
 outputs:
   changed:
     description: 'True if any diff path matches the inputs'
