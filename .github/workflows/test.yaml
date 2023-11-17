@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        - fetch-depth: 2
+        fetch-depth: 2
     - uses: efcs/action@match-path
       with:
         paths: '**/*'
