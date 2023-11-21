@@ -94,6 +94,7 @@ def process_results(results: LITTestResults):
     return conclusion, annotations
 
 
+
 conclusion, annotations = process_results(results)
 
 check_run = repo.create_check_run(name="Libc++ Test Suite",
