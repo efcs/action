@@ -2,8 +2,8 @@
 on: [ push ]
 
 permissions:
-  checks: read|write
-  statuses: read|write
+  checks: write
+  statuses: write
 
 jobs:
   run:
