@@ -29,3 +29,28 @@ check_run = repo.create_check_run(name="My Check Run",
                                   output={"title": "Check Run Output",
                                            "summary": "Check run summary",
                                            "text": "Check run detailed output"})
+
+
+from pydantic import BaseModel, Field, RootModel
+from typing import Literal, Any
+
+class TestResult(BaseModel):
+  code: Literal["PASS", "FAIL", "SKIP", "XPASS"]
+  elapsed: float
+  metrics: dict[str, Any] = Field(default_factory=dict)
+  name: str
+  output: str
+
+class LITTestResults(BaseModel):
+  __version__: str = Field(..., alias="__version__")
+  elapsed: float
+  tests: list[TestResult] = Field(default_factory=list)
+
+from pathlib import Path
+import sys
+import rich
+rich.print(sys.argv)
+in_data = Path(sys.argv[1]).read_text()
+results = LITTestResults.model_validate_json(in_data)
+import rich
+rich.print(results)
