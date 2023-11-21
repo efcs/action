@@ -9,9 +9,6 @@ from github import Github
 from actions_toolkit.github import Context
 
 
-rich.inspect(core)
-rich.print(core)
-
 core.save_state('time', 'new Date().toTimeString()')
 core.set_output('result', 'This is the result')
 core.info('Something went OK')
@@ -97,7 +94,7 @@ def process_results(results: LITTestResults):
     return conclusion, annotations
 
 
-annotations = conclusion, process_results(results)
+conclusion, annotations = process_results(results)
 
 check_run = repo.create_check_run(name="Libc++ Test Suite",
                                   head_sha=context.sha,
