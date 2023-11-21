@@ -20,7 +20,6 @@ g = Github(os.environ['GITHUB_TOKEN'])
 # Then play with your Github objects:
 repo = g.get_repo("efcs/action")
 
-commit = repo.get_commit(context.)
 
 check_run = repo.create_check_run(name="My Check Run",
                                   head_sha=context.sha,
