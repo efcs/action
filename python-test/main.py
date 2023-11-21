@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 from typing import Any, Literal
 
-from actions_toolkit.core  import  core as core
+import actions_toolkit.core  as  core
 from actions_toolkit.github import Context
 from github import Github
 from pydantic import BaseModel, Field
