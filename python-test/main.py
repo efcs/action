@@ -42,7 +42,7 @@ class TestResult(BaseModel):
   output: str
 
 class LITTestResults(BaseModel):
-  __version__: str = Field(..., alias="__version__")
+  version: tuple[int, int, int] = Field(alias="__version__")
   elapsed: float
   tests: list[TestResult] = Field(default_factory=list)
 
