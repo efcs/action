@@ -13,3 +13,5 @@ jobs:
       with:
         fetch-depth: 2
     - uses: efcs/action/python-test@main
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
