@@ -1,0 +1,7 @@
+services:
+  efcs-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/efcs/efcs-runner:latest
+    container_name: efcs-runner

@@ -1,0 +1,28 @@
+name: 'Handle diff paths'
+description: 'Match strings against paths in diff for origin/main and current SHA'
+
+inputs:
+  token:
+    description: 'GitHub token'
+    required: true
+  test_results:
+    description: 'Path to the json file produced by LIT.'
+    required: true
+outputs:
+  clang-latest:
+    description: 'True if any diff path matches the inputs'
+    value: ${{ steps.changed-files.outputs.changed_files }}
+  has-changes:
+    description: 'True if any diff path matches the inputs'
+    value: ${{ steps.changed-files.outputs.changed_files != '' }}
+
+runs:
+  using: "composite"
+
+  steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: echo GITHUB_TOKEN=${{ inputs.token }} >> $GITHUB_ENV
+      shell: bash
+    - run: source ~/venv/bin/activate && python3 ${{ github.action_path }}/main.py ${{ inputs.test_results }}
+      shell: bash

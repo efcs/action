@@ -1,0 +1,20 @@
+name: 'Handle diff paths'
+description: 'Match strings against paths in diff for origin/main and current SHA'
+
+
+outputs:
+  user-email:
+    description: 'True if any diff path matches the inputs'
+    value: ${{ steps.user_email.outputs.user_email }}
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get user's e-mail
+      id: user_email
+      shell: bash
+      run: |
+        git checkout remotes/origin/${{ github.head_ref }}
+        echo "::set-output name=user_email::$(git log -n 1 --pretty=format:%ae)"
+        git checkout -

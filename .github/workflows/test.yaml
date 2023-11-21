@@ -1,10 +1,10 @@
 
-on: [ push, pull_request ]
+on: [ pull_request ]
 jobs:
   run:
-    runs-on: [ efcs-runners ]
+    runs-on: [ self-hosted ]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 2
     - uses: efcs/action@match-path
