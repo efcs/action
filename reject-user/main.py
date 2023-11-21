@@ -20,19 +20,9 @@ context = Context()
 # Fetch the repository information
 repo = github.get_repo("efcs/action")
 commit = repo.get_commit(context.sha)
+rich.inspect(commit)
+rich.print(commit)
 
-
-class TestResult(BaseModel):
-    code: Literal["PASS", "FAIL", "SKIP", "XPASS"]
-    elapsed: float
-    metrics: dict[str, Any] = Field(default_factory=dict)
-    name: str
-    output: str
-
-class LITTestResults(BaseModel):
-    version: tuple[int, int, int] = Field(alias="__version__")
-    elapsed: float
-    tests: list[TestResult] = Field(default_factory=list)
 
 class Annotation(BaseModel):
     path: str
@@ -59,38 +49,9 @@ class CheckRun(BaseModel):
     pull_requests: list[dict[str, Any]] = Field(default_factory=list)
 
 
-def process_results(results: LITTestResults):
-    annotations = []
-    conclusion = "success"
-
-    for test in results.tests:
-        if test.code == "FAIL":
-            conclusion = "failure"
-            path_name = test.name.split("::")[1].strip()
-            path = Path('libcxx/test', path_name)
-
-            annotation = {
-                "path": str(path),
-                "start_line": 1,
-                "end_line": 1,
-                "annotation_level": "failure",
-                "message": f"Test {test.name} FAILED",
-                "raw_details": test.output,
-                "title": "Test Failure"
-            }
-
-            annotations.append(annotation)
-
-    return conclusion, annotations
-
 
 def main():
-    input_file = sys.argv[1]
-    results_file = Path(input_file).read_text()
-    results = LITTestResults.model_validate_json(results_file)
-
-    rich.print(results)
-
+    if commit.
     conclusion, annotations = process_results(results)
 
     check_run = repo.create_check_run(
@@ -107,4 +68,4 @@ def main():
     rich.print(check_run)
 
 if __name__ == "__main__":
-    main()
+
