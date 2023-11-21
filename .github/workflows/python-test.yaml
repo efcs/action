@@ -1,0 +1,10 @@
+
+on: [ push ]
+jobs:
+  run:
+    runs-on: [ self-hosted ]
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+    - uses: efcs/action/python-test@main
