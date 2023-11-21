@@ -1,5 +1,10 @@
 
 on: [ push ]
+
+permissions:
+  checks: read|write
+  statuses: read|write
+
 jobs:
   run:
     runs-on: [ self-hosted ]
