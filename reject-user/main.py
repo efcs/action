@@ -51,9 +51,8 @@ class CheckRun(BaseModel):
 
 
 def main():
-    if commit.
-    conclusion, annotations = process_results(results)
-
+    rich.print(context)
+    '''
     check_run = repo.create_check_run(
         name="Libc++ Test Suite",
         head_sha=context.sha,
@@ -66,6 +65,7 @@ def main():
         },
     )
     rich.print(check_run)
+    '''
 
 if __name__ == "__main__":
 
