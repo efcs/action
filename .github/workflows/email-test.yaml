@@ -10,7 +10,7 @@ jobs:
     runs-on: [ self-hosted ]
     steps:
     - uses: actions/checkout@v4
-    - uses: efcs/action/reject-user@main
+    - uses: efcs/action/get-email@main
       id: get-email
     - run: echo ${{ steps.get-email.outputs.user-email }}
 
