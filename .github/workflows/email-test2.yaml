@@ -36,4 +36,13 @@ jobs:
     - run: ls -lart && pwd && ls -lart ../ && ls -lart ../../
     - run: git status
     - run: python3 ./get-email/main.py
+  run-on-success:
+    # Check if the PR has label libcxx-stage3-tests
+    if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'libcxx-stage3-tests') }}
+    requires: [ run ]
+    runs-on: [ self-hosted ]
+    steps:
+      - run: |
+          echo "The name of the pusher: ${{ github.event.pusher.name }}"
+    
 
