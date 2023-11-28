@@ -25,7 +25,7 @@ repo = github.get_repo("efcs/action")
 def get_commits():
     headers = {
         'Accept': 'application/vnd.github+json',
-        'Authorization': os.environ['GITHUB_TOKEN'],
+        'Authorization': '',
         'X-GitHub-Api-Version': '2022-11-28'
     }
     rich.print(os.environ['PULL_REQUEST_COMMITS_HREF'])
