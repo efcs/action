@@ -23,9 +23,7 @@ rich.inspect(context, methods=True)
 
 # Fetch the repository information
 repo = github.get_repo("efcs/action")
-commit = repo.get_commit(context.sha)
-rich.inspect(commit)
-rich.print(commit)
+
 
 def get_commits():
     headers = {
@@ -33,7 +31,7 @@ def get_commits():
         'Authorization': os.environ['GITHUB_TOKEN'],
         'X-GitHub-Api-Version': '2022-11-28'
     }
-
+    rich.print(os.environ['PULL_REQUEST_COMMITS_HREF'])
     url = os.environ['PULL_REQUEST_COMMITS_HREF']
 
     response = requests.get(url, headers=headers)
