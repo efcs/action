@@ -13,8 +13,7 @@ import rich
 rich.print(os.environ)
 
 # Create Github instance with provided token
-github_token = os.environ["GITHUB_TOKEN"]
-github = Github(github_token)
+github = Github()
 
 
 # Get current context (GitHub Actions context)
