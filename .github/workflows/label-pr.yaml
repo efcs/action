@@ -20,6 +20,7 @@ jobs:
     if: github.event.review.state == 'APPROVED'
     permissions:
       issues: write
+      pull-requests: write
     runs-on: self-hosted
     steps:
       - name: foobar
