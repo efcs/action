@@ -26,9 +26,6 @@ on:
 
 
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
 
 
 env:
@@ -46,7 +43,7 @@ env:
 
 jobs:
   stage1:
-    if: github.repository_owner == 'llvm' && ${{ contains(github.event.inputs.run_stages, 1) }}
+    if: ${{ contains(inputs.run_stages, 1) }}
     runs-on: rizzo-runner-64-set
     continue-on-error: false
     strategy:
@@ -87,7 +84,7 @@ jobs:
             **/CMakeOutput.log
             **/crash_diagnostics/*
   stage2:
-    if: github.repository_owner == 'llvm' &&  ${{ contains(github.event.inputs.run_stages, 2) }}
+    if: ${{ contains(github.event.inputs.run_stages, 2) }}
     runs-on: rizzo-runner-64-set
     needs: [ stage1 ]
     continue-on-error: false
@@ -136,7 +133,7 @@ jobs:
             **/CMakeOutput.log
             **/crash_diagnostics/*
   stage3:
-    if: github.repository_owner == 'llvm' &&  ${{ contains(github.event.inputs.run_stages, 3) }}
+    if: ${{ contains(github.event.inputs.run_stages, 3) }}
     needs: [ stage1, stage2 ]
     continue-on-error: false
     strategy:
