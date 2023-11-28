@@ -13,5 +13,9 @@ jobs:
     - name: foobar
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo $GITHUB_CONTEXT
-
+      run: echo $GITHUB_CONTEXT | jq
+    - run: git log --pretty=format:%ae | awk '/<pattern>/ && !line{line=$0} END{print line}'
+    - name: Get PR Author Email Address
+      run: |
+        echo "The name of the pusher: ${{ github.event.pusher.name }}"
+        echo "The email of the pusher: ${{ github.event.pusher.email }}"
