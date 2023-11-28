@@ -41,7 +41,7 @@ jobs:
         PULL_REQUEST_COMMITS_HREF: ${{ github.event.pull_request._links.commits.href }}
   run-on-success:
     # Check if the PR has label libcxx-stage3-tests
-    if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'libcxx-stage3-tests') }}
+    if: contains(github.event.pull_request.labels.*.name, 'libcxx-stage3-tests')
     needs: [ run ]
     runs-on: [ small ]
     steps:

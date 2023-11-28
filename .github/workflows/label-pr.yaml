@@ -29,7 +29,7 @@ jobs:
         run: echo $GITHUB_CONTEXT | jq
       - run: gh pr edit ${{ github.event.pull_request.html_url }} --add-label "$LABELS"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.token }}
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.pull_request.number }}
           LABELS: libcxx-stage3-tests

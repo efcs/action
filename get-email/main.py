@@ -25,7 +25,7 @@ repo = github.get_repo("efcs/action")
 def get_commits():
     headers = {
         'Accept': 'application/vnd.github+json',
-        'Authorization': '',
+        'Authorization': 'Bearer ',
         'X-GitHub-Api-Version': '2022-11-28'
     }
     rich.print(os.environ['PULL_REQUEST_COMMITS_HREF'])
@@ -66,7 +66,7 @@ class CheckRun(BaseModel):
 def main():
     rich.print(os.environ)
     rich.print(context)
-    get_commits()
+    rich.print(get_commits())
 
 
 if __name__ == "__main__":
