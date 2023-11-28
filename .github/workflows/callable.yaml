@@ -14,7 +14,7 @@
 #
 name: Build and Test libc++
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       ref:
         description: 'ref'
