@@ -10,8 +10,6 @@ from pydantic import BaseModel, Field
 import requests
 import rich
 
-rich.print(os.environ)
-
 # Create Github instance with provided token
 github = Github()
 
@@ -19,7 +17,6 @@ github = Github()
 # Get current context (GitHub Actions context)
 context = Context()
 import rich
-rich.inspect(context, methods=True)
 
 # Fetch the repository information
 repo = github.get_repo("efcs/action")
