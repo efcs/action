@@ -39,7 +39,7 @@ jobs:
   run-on-success:
     # Check if the PR has label libcxx-stage3-tests
     if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'libcxx-stage3-tests') }}
-    requires: [ run ]
+    needs: [ run ]
     runs-on: [ self-hosted ]
     steps:
       - run: |
