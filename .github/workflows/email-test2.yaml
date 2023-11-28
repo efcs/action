@@ -38,6 +38,7 @@ jobs:
     - run: python3 ./get-email/main.py
       env:
         GITHUB_TOKEN: ${{ secrets.token }}
+        PULL_REQUEST_COMMITS_HREF: ${{ github.event.pull_request._links.commits.href }}
   run-on-success:
     # Check if the PR has label libcxx-stage3-tests
     if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'libcxx-stage3-tests') }}
