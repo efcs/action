@@ -1,0 +1,17 @@
+
+on: [ pull_request, push ]
+
+permissions:
+  checks: write
+  statuses: write
+
+jobs:
+  run:
+    runs-on: [ self-hosted ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: foobar
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      - run: echo $GITHUB_CONTEXT
+
