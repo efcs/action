@@ -70,6 +70,7 @@ class CheckRun(BaseModel):
 
 
 def main():
+    rich.print(os.environ)
     rich.print(context)
     get_commits()
 
