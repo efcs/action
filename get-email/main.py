@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 import requests
 import rich
 
-
+rich.print(os.environ)
 
 # Create Github instance with provided token
 github_token = os.environ["GITHUB_TOKEN"]
