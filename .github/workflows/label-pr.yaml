@@ -24,4 +24,5 @@ jobs:
           GH_REPO: ${{ github.repository }}
           NUMBER: ${{ github.event.issue.number }}
           LABELS: libcxx-stage3-tests
+      - work
 
