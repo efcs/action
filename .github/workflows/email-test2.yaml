@@ -34,4 +34,4 @@ jobs:
         -H "X-GitHub-Api-Version: 2022-11-28" \
         ${{ github.event.pull_request._links.commits.href }}
     - run: ls -lart && pwd && ls -lart ../ && ls -lart ../../
-    - run: python3 ./get-email/main.py
+    - run: python3 ../action/get-email/main.py
