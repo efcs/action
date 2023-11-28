@@ -1,0 +1,23 @@
+name: "Labelling new pull requests"
+
+permissions:
+  contents: read
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  approved:
+    if: github.event.review.state == 'APPROVED'
+    permissions:
+      issues: write
+    runs-on: self-hosted
+    steps:
+      - run: gh issue edit "$NUMBER" --add-label "$LABELS"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          LABELS: libcxx-stage3-tests
+
