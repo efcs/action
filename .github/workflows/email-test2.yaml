@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        depth: 100
+        fetch-depth: 100
     - name: foobar
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
