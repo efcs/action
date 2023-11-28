@@ -8,6 +8,11 @@ on:
     types: [submitted, edited, dismissed]
 
 jobs:
+  dump:
+    env:
+        GITHUB_CONTEXT: ${{ toJson(github.event.pull_request) }}
+    steps:
+      - run: echo $GITHUB_CONTEXT | jq
   approved:
     if: github.event.review.state == 'APPROVED'
     permissions:
@@ -18,7 +23,7 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo $GITHUB_CONTEXT | jq
-      - run: gh pr edit "$NUMBER" --add-label "$LABELS"
+      - run: gh pr edit ${{ github.event.pull_request.html_url }} --add-label "$LABELS"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
