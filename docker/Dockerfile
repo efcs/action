@@ -14,3 +14,4 @@ RUN python3 -m venv ~/venv  && echo "source ~/venv/bin/activate" >> ~/.bashrc
 
 RUN . ~/venv/bin/activate && python3 -m pip install --upgrade pip && python3 -m pip install -r /tmp/requirements.txt
 
+RUN sudo apt-get update && sudo apt-get install -y jq
