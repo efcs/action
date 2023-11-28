@@ -10,10 +10,12 @@ on:
 jobs:
   # hello
   dump:
-    env:
-        GITHUB_CONTEXT: ${{ toJson(github.event.pull_request) }}
+    runs-on: self-hosted
     steps:
-      - run: echo $GITHUB_CONTEXT | jq
+      - name: foobar
+        env:
+          GITHUB_CONTEXT2: ${{ toJson(github.event.pull_request) }}
+        run: echo $GITHUB_CONTEXT2 | jq
   approved:
     if: github.event.review.state == 'APPROVED'
     permissions:
