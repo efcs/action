@@ -16,9 +16,10 @@ name: Build and Test libc++
 on:
   workflow_dispatch:
     inputs:
-      ref:
-        description: 'ref'
+      llvm_ref:
+        description: 'llvm ref'
         required: true
+        type: str
       run_stages:
         description: 'Stages to run'
         required: true
@@ -66,7 +67,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: llvm/llvm-project
-          ref: ${{ github.event.inputs.ref }}
+          ref: ${{ inputs.llvm_ref }}
       - name: ${{ matrix.config }}.${{ matrix.cxx }}
         run: libcxx/utils/ci/run-buildbot ${{ matrix.config }}
         env:
