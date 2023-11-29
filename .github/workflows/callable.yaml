@@ -19,19 +19,40 @@ on:
       llvm_ref:
         description: 'llvm ref'
         required: true
-      run_stages:
+        type: string
+      run_stage1:
         description: 'Stages to run'
-        required: true
-        default: [1, 2, 3]
+        required: false
+        default: true
+      run_stage2:
+        description: 'stage 2 run'
+        required: false
+        default: true
+      run_stage3:
+        description: 'stage 3 run'
+        required: false
+        default: false
 
 
 
 
+
+env:
+  CMAKE: "/opt/bin/cmake"
+  # LLVM POST-BRANCH bump version
+  # LLVM POST-BRANCH add compiler test for ToT - 1, e.g. "Clang 17"
+  # LLVM RELEASE bump remove compiler ToT - 3, e.g. "Clang 15"
+  LLVM_HEAD_VERSION: "18"   # Used compiler, update POST-BRANCH.
+  LLVM_PREVIOUS_VERSION: "17"
+  LLVM_OLDEST_VERSION: "16"
+  GCC_STABLE_VERSION: "13"
+  LLVM_SYMBOLIZER_PATH: "/usr/bin/llvm-symbolizer-18"
+  CLANG_CRASH_DIAGNOSTICS_DIR: "crash_diagnostics"
 
 
 jobs:
   stage1:
-    if: contains(inputs.run_stages, 1)
+    if: ${{ inputs.run_stage1 }}
     runs-on: rizzo-runner-64-set
     continue-on-error: false
     strategy:
@@ -42,7 +63,7 @@ jobs:
           'generic-cxx26',
           'generic-modules'
         ]
-        cc: [  'clang-18' ]
+        cc: [ 'clang-18' ]
         cxx: [ 'clang++-18' ]
         clang_tidy: [ 'ON' ]
         include:
@@ -72,7 +93,7 @@ jobs:
             **/CMakeOutput.log
             **/crash_diagnostics/*
   stage2:
-    if: contains(github.event.inputs.run_stages, 2)
+    if: ${{ inputs.run_stage1 }} && ${{ inputs.run_stage2 }}
     runs-on: rizzo-runner-64-set
     needs: [ stage1 ]
     continue-on-error: false
@@ -121,7 +142,7 @@ jobs:
             **/CMakeOutput.log
             **/crash_diagnostics/*
   stage3:
-    if: contains(github.event.inputs.run_stages, 3)
+    if: inputs.run_stage3
     needs: [ stage1, stage2 ]
     continue-on-error: false
     strategy:
@@ -151,22 +172,22 @@ jobs:
         machine: [ 'libcxx-runners-8' ]
         std_modules: [ 'OFF' ]
         include:
-        - config: 'generic-cxx26'
-          machine: libcxx-runners-8
-          std_modules: 'ON'
-        - config: 'generic-asan'
-          machine: libcxx-runners-8
-          std_modules: 'OFF'
-        - config: 'generic-tsan'
-          machine: libcxx-runners-8
-          std_modules: 'OFF'
-        - config: 'generic-ubsan'
-          machine: libcxx-runners-8
-          std_modules: 'OFF'
-        # Use a larger machine for MSAN to avoid timeout and memory allocation issues.
-        - config: 'generic-msan'
-          machine: libcxx-runners-32
-          std_modules: 'OFF'
+          - config: 'generic-cxx26'
+            machine: libcxx-runners-8
+            std_modules: 'ON'
+          - config: 'generic-asan'
+            machine: libcxx-runners-8
+            std_modules: 'OFF'
+          - config: 'generic-tsan'
+            machine: libcxx-runners-8
+            std_modules: 'OFF'
+          - config: 'generic-ubsan'
+            machine: libcxx-runners-8
+            std_modules: 'OFF'
+          # Use a larger machine for MSAN to avoid timeout and memory allocation issues.
+          - config: 'generic-msan'
+            machine: libcxx-runners-32
+            std_modules: 'OFF'
     runs-on: rizzo-runner-64-set
     steps:
       - uses: actions/checkout@v4
@@ -187,4 +208,3 @@ jobs:
             **/CMakeError.log
             **/CMakeOutput.log
             **/crash_diagnostics/*
-
