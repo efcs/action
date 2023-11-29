@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   run:
-    runs-on: rizzo-runner-1-set
+    runs-on: rizzo-runner-11-set
     steps:
     - uses: actions/checkout@v4
       with:
@@ -41,7 +41,7 @@ jobs:
     # Check if the PR has label libcxx-stage3-tests
     if: contains(github.event.pull_request.labels.*.name, 'libcxx-stage3-tests')
     needs: [ run ]
-    runs-on: [ rizzo-runner-1-set ]
+    runs-on: rizzo-runner-11-set
     steps:
       - run: |
           echo "The name of the pusher: ${{ github.event.pusher.name }}"
