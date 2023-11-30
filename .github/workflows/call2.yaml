@@ -26,7 +26,11 @@ on:
         required: false
         default: echo hello
         type: string
-
+      image:
+        description: 'image'
+        required: false
+        default: ubuntu:latest
+        type: string
 
 
 
