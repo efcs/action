@@ -46,11 +46,11 @@ jobs:
       - name: FooBar
         run: ${{ inputs.cmd }}
   cont-test:
-  runs-on: ${{ inputs.machine }}
-  container:
-    image: ${{ inputs.image }}
-    options: --cpus 1 --memory 2G
-  steps:
-    - name: echo hello
-      run: echo hello
+    runs-on: ${{ inputs.machine }}
+    container:
+      image: ${{ inputs.image }}
+      options: --cpus 1 --memory 2G
+    steps:
+      - name: echo hello
+        run: echo hello
 
