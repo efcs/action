@@ -21,6 +21,11 @@ on:
         required: false
         default: libcxx-runners-8
         type: string
+      cmd:
+        description: 'cmd'
+        required: false
+        default: echo hello
+        type: string
 
 
 
@@ -31,4 +36,4 @@ jobs:
     runs-on: ${{ inputs.machine }}
     steps:
       - name: FooBar
-        run: echo hello
+        run: ${{ inputs.cmd }}
