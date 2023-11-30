@@ -21,7 +21,7 @@ on:
         required: false
         default: libcxx-runners-8
         type: choice
-        choices:
+        options:
           - rizzo-runner-8-set
           - rizzo-runner-dd-set
           - rizzo-runner-1-set
