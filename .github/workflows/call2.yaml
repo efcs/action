@@ -1,0 +1,34 @@
+# This file defines pre-commit CI for libc++, libc++abi, and libunwind (on Github).
+#
+# We split the configurations in multiple stages with the intent of saving compute time
+# when a job fails early in the pipeline. This is why the jobs are marked as `continue-on-error: false`.
+# We try to run the CI configurations with the most signal in the first stage.
+#
+# Stages 1 & 2 are meant to be "smoke tests", and are meant to catch most build/test failures quickly and without using
+# too many resources.
+# Stage 3 is "everything else", and is meant to catch breakages on more niche or unique configurations.
+#
+# Therefore, we "fail-fast" for any failures during stages 1 & 2, meaning any job failing cancels all other running jobs,
+# under the assumption that if the "smoke tests" fail, then the other configurations will likely fail in the same way.
+# However, stage 3 does not fail fast, as it's more likely that any one job failing is a flake or a configuration-specific
+#
+
+on:
+  workflow_dispatch:
+    inputs:
+      machine:
+        description: 'machine'
+        required: false
+        default: libcxx-runners-8
+        type: string
+
+
+
+
+
+jobs:
+  stage1:
+    runs-on: ${{ inputs.machine }}
+    steps:
+      - name: FooBar
+        run: echo hello
