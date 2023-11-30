@@ -1,4 +1,4 @@
-FROM ghcr.io/libcxx/actions-builder:testing AS base
+FROM gcr.io/libcxx-buildbots/actions-runner:testing AS base
 
 RUN sudo apt update && sudo apt-get install -y --no-install-recommends jq python3-pip python3-venv python3-dev python3-full \
     && sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
