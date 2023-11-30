@@ -16,10 +16,31 @@
 on:
   workflow_dispatch:
     inputs:
-      llvm_ref:
-        description: 'llvm ref'
-        required: true
+      source:
+        description: 'the source root'
+        required: false
+        default: .
         type: string
+      cc:
+        description: 'compiler'
+        required: false
+        default: clang
+      cxx:
+        description: 'compiler'
+        required: false
+        default: clang++
+      runner-group:
+        description: 'runner set'
+        required: false
+        default: rizzo-runner-64-set
+      cmake:
+        description: 'cmake'
+        required: false
+        default: /opt/bin/cmake
+      ninja:
+        description: 'ninja'
+        required: false
+        default: /opt/bin/ninja
       run_stage1:
         description: 'Stages to run'
         required: false
@@ -53,7 +74,8 @@ env:
 jobs:
   stage1:
     if: ${{ inputs.run_stage1 }}
-    runs-on: rizzo-runner-64-set
+    runs-on:
+      group: ${{ inputs.runner-group }}
     continue-on-error: false
     strategy:
       fail-fast: true

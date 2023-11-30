@@ -10,7 +10,7 @@ on:
 jobs:
   # hello
   dump:
-    runs-on: rizzo-runner-1-set
+    runs-on: self-hosted
     steps:
       - name: foobar
         env:
