@@ -1,0 +1,49 @@
+name: 'Configure the runtimes build'
+description: 'Match strings against paths in diff for origin/main and current SHA'
+
+inputs:
+  source:
+    description: 'the source root'
+    required: false
+    default: .
+  build:
+    description: 'the build root'
+    required: false
+    default: build
+  install:
+    description: 'the install root'
+    required: false
+    default: install
+  cc:
+    description: 'C compiler'
+    required: true
+  cxx:
+    description: 'C++ compiler'
+    required: true
+  cmake:
+    description: 'cmake'
+    required: false
+    default: /opt/bin/cmake
+  ninja:
+    description: 'ninja'
+    required: false
+    default: /opt/bin/ninja
+  runtimes:
+    description: 'projects to build'
+    required: false
+    default: 'libcxx;libcxxabi'
+  cmake_args:
+    description: 'cmake arguments'
+    required: false
+    default: ''
+
+runs:
+  using: "composite"
+
+  steps:
+    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    - run: echo GITHUB_TOKEN=${{ inputs.token }} >> $GITHUB_ENV
+      shell: bash
+    - run: source ~/venv/bin/activate && python3 ${{ github.action_path }}/main.py ${{ inputs.test_results }}
+      shell: bash

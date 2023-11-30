@@ -1,0 +1,39 @@
+name: "Labelling new pull requests"
+
+permissions:
+  contents: read
+
+on:
+  pull_request_review:
+    types: [submitted, edited, dismissed]
+
+jobs:
+  # hello
+  dump:
+    runs-on:
+      group: default
+    steps:
+      - name: foobar
+        env:
+          GITHUB_CONTEXT2: ${{ toJson(github.event.pull_request) }}
+        run: echo $GITHUB_CONTEXT2 | jq
+  approved:
+    if: github.event.review.state == 'APPROVED'
+    permissions:
+      issues: write
+      pull-requests: write
+    runs-on:
+      group: rizzo-runner-1-set
+    steps:
+      - name: foobar
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+          TOKEN: ${{ github.token }}
+        run: echo $GITHUB_CONTEXT | jq && echo $TOKEN
+      - run: gh pr edit ${{ github.event.pull_request.html_url }} --add-label "$LABELS"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          LABELS: libcxx-stage3-tests
+

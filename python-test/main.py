@@ -22,43 +22,6 @@ repo = github.get_repo("efcs/action")
 commit = repo.get_commit(context.sha)
 
 
-class TestResult(BaseModel):
-    code: Literal["PASS", "FAIL", "SKIP", "XPASS"]
-    elapsed: float
-    metrics: dict[str, Any] = Field(default_factory=dict)
-    name: str
-    output: str
-
-class LITTestResults(BaseModel):
-    version: tuple[int, int, int] = Field(alias="__version__")
-    elapsed: float
-    tests: list[TestResult] = Field(default_factory=list)
-
-class Annotation(BaseModel):
-    path: str
-    start_line: int
-    end_line: int
-    annotation_level: Literal["notice", "warning", "failure"]
-    message: str
-    title: str
-    raw_details: str
-
-class CheckRun(BaseModel):
-    name: str
-    head_sha: str
-    status: Literal["queued", "in_progress", "completed"]
-    conclusion: Literal["success", "failure", "neutral", "cancelled", "timed_out", "action_required"]
-    output: dict[str, Any] = Field(default_factory=dict)
-    actions: list[dict[str, Any]] = Field(default_factory=list)
-    check_suite: dict[str, Any] = Field(default_factory=dict)
-    external_id: str
-    started_at: str
-    completed_at: str
-    output: dict[str, Any] = Field(default_factory=dict)
-    annotations: list[Annotation] = Field(default_factory=list)
-    pull_requests: list[dict[str, Any]] = Field(default_factory=list)
-
-
 def process_results(results: LITTestResults):
     annotations = []
     conclusion = "success"

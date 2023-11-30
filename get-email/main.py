@@ -3,25 +3,38 @@ import sys
 from pathlib import Path
 from typing import Any, Literal
 
-from actions_toolkit.core  as core
+import actions_toolkit.core  as core
 from actions_toolkit.github import Context
 from github import Github
 from pydantic import BaseModel, Field
+import requests
 import rich
 
-
 # Create Github instance with provided token
-github_token = os.environ["GITHUB_TOKEN"]
-github = Github(github_token)
+github = Github()
+
 
 # Get current context (GitHub Actions context)
 context = Context()
+import rich
 
 # Fetch the repository information
 repo = github.get_repo("efcs/action")
-commit = repo.get_commit(context.sha)
-rich.inspect(commit)
-rich.print(commit)
+
+
+def get_commits():
+    headers = {
+        'Accept': 'application/vnd.github+json',
+        'Authorization': 'Bearer {}'.format(os.environ['GITHUB_TOKEN']),
+        'X-GitHub-Api-Version': '2022-11-28'
+    }
+    rich.print(os.environ['PULL_REQUEST_COMMITS_HREF'])
+    url = os.environ['PULL_REQUEST_COMMITS_HREF']
+
+    response = requests.get(url, headers=headers)
+    rich.print(response)
+    response.raise_for_status()
+    return response.json()
 
 
 class Annotation(BaseModel):
@@ -51,21 +64,10 @@ class CheckRun(BaseModel):
 
 
 def main():
-    if commit.
-    conclusion, annotations = process_results(results)
+    rich.print(os.environ)
+    rich.print(context)
+    rich.print(get_commits())
 
-    check_run = repo.create_check_run(
-        name="Libc++ Test Suite",
-        head_sha=context.sha,
-        status="completed",
-        conclusion=conclusion,
-        output={
-            "title": "Check Run Output",
-            "summary": f"{len(annotations)} tests failed.",
-            "annotations": annotations
-        },
-    )
-    rich.print(check_run)
 
 if __name__ == "__main__":
-
+    main()
