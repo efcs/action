@@ -10,7 +10,8 @@ on:
 jobs:
   # hello
   dump:
-    runs-on: self-hosted
+    runs-on:
+      group: default
     steps:
       - name: foobar
         env:
@@ -21,7 +22,8 @@ jobs:
     permissions:
       issues: write
       pull-requests: write
-    runs-on: self-hosted
+    runs-on:
+      group: rizzo-runner-1-set
     steps:
       - name: foobar
         env:

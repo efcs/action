@@ -3,5 +3,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ghcr.io/efcs/efcs-runner:latest
+    image: gcr.io/libcxx-buildbots/efcs-runner:latest
     container_name: efcs-runner
